@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">car_racing_betting_game_mobile</string>
+    <string name="btn_SignIn">SIGN IN</string>
+    <string name="btn_SignUp">SIGN UP</string>
+    <string name="tv_SignIn">Sign In Form</string>
+    <string name="tv_SignUp">Sign Up Form</string>
+    <string name="tv_NotYet">Not Account Yet? Create one</string>
+    <string name="tv_Already">Already Account? Sign in</string>
+    <string name="ev_UserName">Username</string>
+    <string name="ev_Password">Password</string>
+    <string name="ev_ConfirmPassword">Confirm Password</string>
+    <string name="tv_or">-----------OR----------</string>
+</resources>
