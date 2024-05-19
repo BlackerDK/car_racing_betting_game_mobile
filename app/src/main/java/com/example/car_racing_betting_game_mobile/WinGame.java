@@ -3,6 +3,7 @@ package com.example.car_racing_betting_game_mobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,8 +50,18 @@ public class WinGame extends AppCompatActivity {
         image.bringToFront();
 
         TextView bonus = findViewById(R.id.textView);
-        bonus.setText("+200");
+
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("point");
+        bonus.setText( "+ " + data);
         bonus.bringToFront();
+
+
+        Button playAgian = (Button) findViewById(R.id.buttonPlayAgain);
+        playAgian.setOnClickListener(view -> {
+            finish();
+        });
+
 
     }
 }
