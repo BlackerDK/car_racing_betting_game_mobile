@@ -137,7 +137,6 @@ public class BettingPageActivity extends AppCompatActivity {
                     int car1 = seekBar1.getProgress();
                     int car2 = seekBar2.getProgress();
                     int car3 = seekBar3.getProgress();
-
                     if (car1 < 100 && car2 < 100 && car3 < 100) {
                         car1 += random.nextInt(6);
                         car2 += random.nextInt(6);
@@ -151,8 +150,8 @@ public class BettingPageActivity extends AppCompatActivity {
                     if (car1 >= 100 || car2 >= 100 || car3 >= 100) {
                         String message = "Car là xe chiến thắng ";
                         if (car1 >= 100) {
-                            totalAllowedValue = totalAllowedValue - (value1+value2+value3);
-                            double PointWin = totalAllowedValue + value1 * 2;
+                            totalAllowedValue = totalAllowedValue /*đây là giá trị ban đầu*/ - (value1+value2+value3); //tổng tiền đặt;
+                            double PointWin = totalAllowedValue + value1 * 2;// Tổng số tiền còn khi đặt xong + thắng tiền car cược
                             tvPoint.setText(PointWin+"");
                             message = "Car 1 là xe chiến thắng";
                         } else if (car2 >= 100) {
@@ -169,7 +168,7 @@ public class BettingPageActivity extends AppCompatActivity {
                         Toast.makeText(BettingPageActivity.this, message, Toast.LENGTH_SHORT).show();
                         stop = true;
                     } else {
-                        handler.postDelayed(this, 200);
+                        handler.postDelayed(this, 1000);
                     }
                 }
             }
