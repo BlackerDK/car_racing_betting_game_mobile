@@ -44,7 +44,7 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
         if(!checkInput()){
             return;
         }
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,InformationUserActivity.class);
         startActivity(intent);
         finish();
     }
