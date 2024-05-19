@@ -15,7 +15,7 @@
         <activity android:name=".SignUpActivity"
             tools:ignore="Instantiatable"></activity>
         <activity
-            android:name=".SignInActivity"
+            android:name=".BettingPageActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>
