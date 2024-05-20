@@ -1,5 +1,6 @@
 package com.example.car_racing_betting_game_mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -166,8 +167,34 @@ public class BettingPageActivity extends AppCompatActivity {
                             tvPoint.setText(PointWin+"");
                             message = "Car 3 là xe chiến thắng";
                         }
+
                         Toast.makeText(BettingPageActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                        double leftAllowedValue = Double.parseDouble(tvPoint.getText().toString());
+
+                        if(totalAllowedValue >  leftAllowedValue){
+                            double point = totalAllowedValue - leftAllowedValue;
+                            Intent intent = new Intent(BettingPageActivity.this, LoseGame.class);
+                            intent.putExtra("point", "200");
+                            startActivity(intent);
+
+                        }else {
+                            double point =   leftAllowedValue - totalAllowedValue;
+                            Intent intent = new Intent(BettingPageActivity.this, WinGame.class);
+                            intent.putExtra("point", "200");
+                            startActivity(intent);
+                        }
+
+
+
+
+
+
                         stop = true;
+
+
+
+
                     } else {
                         handler.postDelayed(this, 200);
                     }

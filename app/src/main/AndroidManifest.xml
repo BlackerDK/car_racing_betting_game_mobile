@@ -13,6 +13,18 @@
         android:theme="@style/Theme.Car_racing_betting_game_mobile"
         tools:targetApi="31">
         <activity
+            android:name=".WinGame"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".LoseGame"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
@@ -51,7 +63,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
