@@ -2,7 +2,9 @@ package com.example.car_racing_betting_game_mobile;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
     TextView tvUsername, tvBalance;
     ImageButton logoutBtn, startBtn, addCoinBtn;
     private int totalCoins = 0;
+    String usernameSaved;
     private static final int MAX_COINS = 100;
     private static int timeLeft = 0; // x minutes in milliseconds
     private boolean canAddCoins = true;
@@ -38,6 +41,8 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         String username = intent.getStringExtra("username");
         int balance = intent.getIntExtra("balance", 0);
         if (username != null && balance != 0) {
+            usernameSaved= username;
+            totalCoins += balance;
             Toast.makeText(this, "Welcome to Road Racing Car", Toast.LENGTH_SHORT).show();
         }
         tvUsername = findViewById(R.id.tvUsername);
@@ -58,12 +63,50 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         if (v.getId() == R.id.logoutBtn) {
             // Logout
-        } else if (v.getId() == R.id.btnStart) {
+            handleLogout();
+        } else if (v.getId() == R.id.buttonStart) {
             // Start game
+            navigateToRoadRacingCar();
         } else if (v.getId() == R.id.coinBtn) {
             // Add coin
             showAddCoinsDialog();
         }
+    }
+
+    public void navigateToRoadRacingCar() {
+        Intent intent = new Intent(this, BettingPageActivity.class);
+        intent.putExtra("username", usernameSaved);
+        intent.putExtra("balance", totalCoins);
+        startActivity(intent);
+        finish();
+    }
+    public void handleLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Logout");
+        builder.setMessage("Are you sure you want to logout?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            /**
+             * Save data to shared preferences
+             * Redirect to sign in activity
+             */
+            saveData();
+            Intent intent = new Intent(this, SignInActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.show();
+    }
+
+    public void saveData() {
+        // Save data
+        // store username and balance to shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(usernameSaved, totalCoins); // username mapping to current balance
+        editor.apply();
     }
 
     public void showAddCoinsDialog() {
@@ -100,7 +143,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
             public void onFinish() {
                 // after time left is finished, set canAddCoins to true
                 canAddCoins = true;
-                timeLeft= 0;
+                timeLeft = 0;
                 Toast.makeText(InformationUserActivity.this, "You can add coins again", Toast.LENGTH_SHORT).show();
             }
         };

@@ -58,7 +58,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }else{
             Toast.makeText(this,"Sign up success",Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this,SignInActivity.class);
+            Intent intent = new Intent(this,InformationUserActivity.class);
+            intent.putExtra("username",etUsername.getText().toString());
+            // After logged in -> Automatically bonus 100 coins to user
+            intent.putExtra("balance",100);
             startActivity(intent);
             finish();
         }
