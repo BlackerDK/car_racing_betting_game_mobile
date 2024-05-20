@@ -45,6 +45,9 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
             return;
         }
         Intent intent = new Intent(this,InformationUserActivity.class);
+        intent.putExtra("username",etUsername.getText().toString());
+        // After logged in -> Automatically bonus 100 coins to user
+        intent.putExtra("balance",100);
         startActivity(intent);
         finish();
     }
