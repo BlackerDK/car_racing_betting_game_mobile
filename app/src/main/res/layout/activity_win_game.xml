@@ -62,7 +62,7 @@
             android:layout_marginEnd="102dp"
             android:text=" + 200 "
             android:textColor="#FFC003"
-            android:textSize="50dp" />
+            android:textSize="40sp" />
     </RelativeLayout>
 
 

@@ -32,11 +32,11 @@ public class LoseGame extends AppCompatActivity {
                 .into(image);
 
         TextView bonus = findViewById(R.id.textView);
+
         Intent intent = getIntent();
         String data = intent.getStringExtra("point");
-        bonus.setText("- "+data);
+        bonus.setText( "- " +data);
         bonus.bringToFront();
-
 
 
         Button playAgian = (Button) findViewById(R.id.buttonPlayAgain);
