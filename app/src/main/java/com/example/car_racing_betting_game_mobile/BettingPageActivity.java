@@ -22,7 +22,7 @@ public class BettingPageActivity extends AppCompatActivity {
     private CheckBox cbCar1,cbCar2, cbCar3;
     private EditText edCar1, edCar2,edCar3;
     private TextView tvPoint;
-    Button btnStart, btnReset;
+    Button btnStart, btnReset, btnRule;
     private boolean stop = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,8 @@ public class BettingPageActivity extends AppCompatActivity {
         edCar2 = findViewById(R.id.edCar2);
         edCar3 = findViewById(R.id.edCar3);
         tvPoint = findViewById(R.id.tvPoint);
+
+        btnRule = findViewById(R.id.btnRule);
 
         btnReset.setOnClickListener(view -> {
             ableInputs();
@@ -65,6 +67,11 @@ public class BettingPageActivity extends AppCompatActivity {
                     }
                 }
             }
+        });
+
+        btnRule.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RulesPageActivity.class);
+            startActivity(intent);
         });
     }
     private boolean validateInputs() {

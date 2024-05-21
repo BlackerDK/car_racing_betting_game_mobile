@@ -1,6 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/a">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_Back"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="X" />
+
+        <TextView
+            android:layout_width="275dp"
+            android:layout_height="41dp"
+            android:text="More About Our Game"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:text="1. Introduction Game"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Nhóm chúng tôi là những người bạn học PRM392"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Trò chơi cá cược lành mạnh mang đến niềm vui giải trí"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Cuộc đời không làm lại được thì vô đây mình làm lại"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textSize="15sp"
+            android:text="- Cá độ - Niềm hân hoan của con người muốn độ nhưng không muốn mất tiền"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text=""
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="2. The Rule"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:paddingBottom="10sp"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Bắt đầu trò chơi, bạn sẽ nhận được 100 điểm"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Tỉ lệ cược sẽ là 1 : 2, còn thua thì mất hết"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text="- Có thể nap hoặc là quay minigame để nhận thêm điểm"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text=""
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:textSize="15sp"
+            android:text=""
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="102dp"
+            android:paddingBottom="10sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLogo"
+        android:layout_width="325dp"
+        android:layout_height="150dp"
+        android:background="@drawable/logo_car_betting"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.839" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

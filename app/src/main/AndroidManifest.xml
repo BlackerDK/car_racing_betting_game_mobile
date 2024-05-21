@@ -25,6 +25,9 @@
             android:name=".LoseGame"
             tools:ignore="Instantiatable" />
         <activity
+            android:name=".RulesPageActivity"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".BettingPageActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
