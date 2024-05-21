@@ -10,28 +10,30 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText etUsername;
-    private EditText etPassword;
-    private EditText etConfirmPassword;
+    private TextInputEditText etUsername;
+    private TextInputEditText etPassword;
+    private TextInputEditText etConfirmPassword;
+    private TextView signUp;
+    private TextView alreadyHaveAccount;
 
-    private TextView tvAlreadyAccount;
-    private Button btnSignUp;
-
-    private  final String REQUIRE="Require";
+    private  final String REQUIRE = "Require";
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        etUsername = (EditText) findViewById(R.id.txtUseName);
-        etPassword =(EditText) findViewById(R.id.txtPassword);
-        etConfirmPassword =(EditText) findViewById(R.id.txtConfirmPassword);
-        btnSignUp = (Button) findViewById(R.id.btnSignUp);
-        tvAlreadyAccount = (TextView) findViewById(R.id.tvAccountAlready);
+        etUsername = (TextInputEditText) findViewById(R.id.username);
+        etPassword =(TextInputEditText) findViewById(R.id.password);
+        etConfirmPassword =(TextInputEditText) findViewById(R.id.passwordConfirm);
+        signUp = (TextView) findViewById(R.id.signUp);
+        alreadyHaveAccount = (TextView) findViewById(R.id.alreadyHaveAccount);
 
-        tvAlreadyAccount.setOnClickListener(this);
-        btnSignUp.setOnClickListener(this);
+        alreadyHaveAccount.setOnClickListener(this);
+        signUp.setOnClickListener(this);
+
     }
     private boolean checkInput(){
         if(TextUtils.isEmpty(etUsername.getText().toString())){
@@ -73,9 +75,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     @Override
     public void onClick(View v){
-        if (v.getId() == R.id.btnSignUp) {
+        if (v.getId() == R.id.signUp) {
             signUp();
-        } else if (v.getId() == R.id.tvAccountAlready) {
+        } else if (v.getId() == R.id.alreadyHaveAccount) {
             signInForm();
         }
     }
