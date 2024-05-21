@@ -40,11 +40,8 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
 
         String username = intent.getStringExtra("username");
         int balance = intent.getIntExtra("balance", 0);
-        if (username != null && balance != 0) {
-            usernameSaved= username;
-            totalCoins += balance;
-            Toast.makeText(this, "Welcome to Road Racing Car", Toast.LENGTH_SHORT).show();
-        }
+        setInitialData(username, balance);
+
         tvUsername = findViewById(R.id.tvUsername);
         tvBalance = findViewById(R.id.tvBalance);
         logoutBtn = findViewById(R.id.logoutBtn);
@@ -73,6 +70,14 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         }
     }
 
+    public void setInitialData(String username, int balance) {
+        if (username != null && balance != 0) {
+            usernameSaved = username;
+            totalCoins = balance;
+            Toast.makeText(this, "Welcome to Road Racing Car", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void navigateToRoadRacingCar() {
         Intent intent = new Intent(this, BettingPageActivity.class);
         intent.putExtra("username", usernameSaved);
@@ -80,6 +85,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         startActivity(intent);
         finish();
     }
+
     public void handleLogout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout");
@@ -117,13 +123,11 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
             @Override
             public void onAddCoins(int coins) {
                 if (canAddCoins) { // check whether user can add coins or not
-                    if (coins > 0 && coins <= MAX_COINS) { // validate coins inputted
-                        totalCoins += coins;
-                        tvBalance.setText("Your balance: " + totalCoins + "$");
-                        canAddCoins = false; // if user clicked on button get coins -> set canAddCoins to false
-                        timeLeft = 1 * 60 * 1000; // 1 minute in milliseconds
-                        startCountDownTimer(timeLeft); // set count down from main activity
-                    }
+                    totalCoins += coins;
+                    tvBalance.setText("Your balance: " + totalCoins + "$");
+                    canAddCoins = false; // if user clicked on button get coins -> set canAddCoins to false
+                    timeLeft = 1 * 60 * 1000; // 1 minute in milliseconds
+                    startCountDownTimer(timeLeft); // set count down from main activity
                 } else {
                     Toast.makeText(InformationUserActivity.this, "Please enter a value between 1 and 100", Toast.LENGTH_SHORT).show();
                 }

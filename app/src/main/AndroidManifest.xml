@@ -23,7 +23,6 @@
         <activity
             android:exported="true"
             android:name=".SignUpActivity"
-            android:theme="@style/Theme.Car_racing_betting_game_mobile.Starting"
             tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

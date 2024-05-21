@@ -22,7 +22,7 @@ public class BettingPageActivity extends AppCompatActivity {
     private CheckBox cbCar1,cbCar2, cbCar3;
     private EditText edCar1, edCar2,edCar3;
     private TextView tvPoint;
-    Button btnStart, btnReset;
+    Button btnStart, btnReset, btnAddMoney;
     private boolean stop = false;
     private double PointWin;
     private double PointLost;
@@ -31,6 +31,17 @@ public class BettingPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_betting);
+
+        // get data from user
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        int balance = intent.getIntExtra("balance", 0);
+        if (username != null && balance != 0) {
+            tvPoint = findViewById(R.id.tvPoint);
+            tvPoint.setText(""+balance);
+        }
+        // get view
+        btnAddMoney = findViewById(R.id.btnAddMoney);
         btnStart = findViewById(R.id.btnStart);
         btnReset = findViewById(R.id.btnReset);
         seekBar1 = findViewById(R.id.sbCar1);
@@ -68,6 +79,16 @@ public class BettingPageActivity extends AppCompatActivity {
                     }
                 }
             }
+        });
+        /**
+         * Add money and redirect to user information page
+         */
+        btnAddMoney.setOnClickListener(view -> {
+            Intent intent1 = new Intent(this, InformationUserActivity.class);
+            intent1.putExtra("username", username);
+            intent1.putExtra("balance", balance);
+            startActivity(intent1);
+            finish();
         });
     }
     private boolean validateInputs() {

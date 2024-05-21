@@ -28,6 +28,8 @@ public class TimeDialogFragment extends DialogFragment {
     private CountDownTimer countDownTimer;
     private long timeLeft;
     private OnAddCoinsListener listener;
+    private final static int MAX_COINS = 100;
+
     public interface OnAddCoinsListener {
         void onAddCoins(int coins);
     }
@@ -59,7 +61,7 @@ public class TimeDialogFragment extends DialogFragment {
             timeLeft = getArguments().getLong(ARG_TIME_LEFT);
         }
 
-        if(timeLeft> 0) {
+        if (timeLeft > 0) {
             startCountDownTimer(timeLeft);
             // SET VISIBILITY OF PROPERTIES
             countdownTextView.setVisibility(View.VISIBLE);
@@ -73,13 +75,15 @@ public class TimeDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String coinsText = tvCoins.getText().toString().trim();
-                if (!TextUtils.isEmpty(coinsText)) {
+                if (!TextUtils.isEmpty(coinsText) && Integer.parseInt(coinsText) <= MAX_COINS && Integer.parseInt(coinsText) > 0) {
                     int coinsToAdd = Integer.parseInt(coinsText); // Convert string to integer
                     if (listener != null) {
                         // implement onAddCoins method in MainActivity
                         listener.onAddCoins(coinsToAdd);
                     }
                     dismiss(); // close the dialog
+                } else {
+                    tvCoins.setError("Invalid coins amount (1 - 100) coins");
                 }
             }
         });

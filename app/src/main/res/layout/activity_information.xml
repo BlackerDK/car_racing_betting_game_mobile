@@ -102,11 +102,11 @@
 
         <ImageButton
             android:id="@+id/logoutBtn"
-            android:layout_width="49dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/exit"
+            android:layout_width="51dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
