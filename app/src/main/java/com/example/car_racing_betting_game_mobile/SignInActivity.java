@@ -9,11 +9,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class SignInActivity  extends AppCompatActivity implements View.OnClickListener {
-    private EditText etUsername;
-    private EditText etPassword;
-    private TextView tvNotAccountYet;
-    private Button btnSignIn;
+
+    private TextView signIn;
+    private TextView signUp;
+
+    private TextInputEditText etUsername;
+    private TextInputEditText etPassword;
+
 
     private  final String REQUIRE="Require";
     @Override
@@ -21,13 +26,13 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        etUsername = (EditText) findViewById(R.id.txtUseName);
-        etPassword =(EditText) findViewById(R.id.txtPassword);
-        btnSignIn = (Button) findViewById(R.id.btnSignIn);
-        tvNotAccountYet = (TextView) findViewById(R.id.tvNotAccountYet);
+        etUsername = (TextInputEditText) findViewById(R.id.username);
+        etPassword =(TextInputEditText) findViewById(R.id.password);
+        signIn = (TextView) findViewById(R.id.signIn);
+        signUp = (TextView) findViewById(R.id.signUp);
 
-        tvNotAccountYet.setOnClickListener(this);
-        btnSignIn.setOnClickListener(this);
+        signUp.setOnClickListener(this);
+        signIn.setOnClickListener(this);
     }
     private boolean checkInput(){
         if(TextUtils.isEmpty(etUsername.getText().toString())){
@@ -57,9 +62,9 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onClick(View v){
-        if (v.getId() == R.id.btnSignIn) {
+        if (v.getId() == R.id.signIn) {
             signIn();
-        } else if (v.getId() == R.id.tvNotAccountYet) {
+        } else if (v.getId() == R.id.signUp) {
             signUpForm();
         }
     }
