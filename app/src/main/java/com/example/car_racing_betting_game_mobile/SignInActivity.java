@@ -1,5 +1,6 @@
 package com.example.car_racing_betting_game_mobile;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -49,9 +50,13 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
         if(!checkInput()){
             return;
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        String username = etUsername.getText().toString();
-        intent.putExtra("USERNAME", username);
+
+        Intent intent = new Intent(this,InformationUserActivity.class);
+        // Pass data to next activity
+        intent.putExtra("username",etUsername.getText().toString());
+        // After logged in -> Automatically bonus 100 coins to user
+        int balance = getBalanceFromPreviousLoggedIn();
+        intent.putExtra("balance",balance);
         startActivity(intent);
         finish();
     }
@@ -59,6 +64,12 @@ public class SignInActivity  extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this,SignUpActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private int getBalanceFromPreviousLoggedIn(){
+        String username = etUsername.getText().toString().trim();
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences",MODE_PRIVATE);
+        return sharedPreferences.getInt(username,100);
     }
     @Override
     public void onClick(View v){

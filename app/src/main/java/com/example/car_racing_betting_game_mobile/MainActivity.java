@@ -24,16 +24,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        Intent intent = getIntent();
-
-        String username = intent.getStringExtra("USERNAME");
-
-        welcomeText = (TextView) findViewById(R.id.welcomeText);
-
-        if (username != null) {
-            welcomeText.setText("Welcome, " + username + "!");
-        }
     }
 
 
