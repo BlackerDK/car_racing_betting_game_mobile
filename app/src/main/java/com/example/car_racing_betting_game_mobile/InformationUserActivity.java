@@ -94,7 +94,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
 
     public void handleLogout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Logout");
+        builder.setTitle("Save game");
         builder.setMessage("Are you sure you want to logout?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
             /**

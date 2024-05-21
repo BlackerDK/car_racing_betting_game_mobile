@@ -102,6 +102,7 @@ public class BettingPageActivity extends AppCompatActivity {
             intent1.putExtra("username", username);
             intent1.putExtra("balance", totalCoins);
             intent1.putExtra("canAddCoins", canAddCoins);
+            intent1.putExtra("timeLeft", timeLeft);
             startActivity(intent1);
             finish();
         });
