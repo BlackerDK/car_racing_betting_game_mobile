@@ -41,6 +41,10 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         String username = intent.getStringExtra("username");
         int balance = intent.getIntExtra("balance", 0);
         setInitialData(username, balance);
+        // from BettingPages
+        canAddCoins = intent.getBooleanExtra("canAddCoins", true);
+        timeLeft = intent.getIntExtra("timeLeft", 0);
+
 
         tvUsername = findViewById(R.id.tvUsername);
         tvBalance = findViewById(R.id.tvBalance);
@@ -82,6 +86,8 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         Intent intent = new Intent(this, BettingPageActivity.class);
         intent.putExtra("username", usernameSaved);
         intent.putExtra("balance", totalCoins);
+        intent.putExtra("timeLeft", timeLeft);
+        intent.putExtra("canAddCoins", canAddCoins);
         startActivity(intent);
         finish();
     }
