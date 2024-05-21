@@ -24,6 +24,9 @@ public class BettingPageActivity extends AppCompatActivity {
     private TextView tvPoint;
     Button btnStart, btnReset;
     private boolean stop = false;
+    private double PointWin;
+    private double PointLost;
+    private double PointBetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +141,6 @@ public class BettingPageActivity extends AppCompatActivity {
                     int car1 = seekBar1.getProgress();
                     int car2 = seekBar2.getProgress();
                     int car3 = seekBar3.getProgress();
-
                     if (car1 < 100 && car2 < 100 && car3 < 100) {
                         car1 += random.nextInt(6);
                         car2 += random.nextInt(6);
@@ -152,51 +154,40 @@ public class BettingPageActivity extends AppCompatActivity {
                     if (car1 >= 100 || car2 >= 100 || car3 >= 100) {
                         String message = "Car là xe chiến thắng ";
                         if (car1 >= 100) {
-                            totalAllowedValue = totalAllowedValue - (value1+value2+value3);
-                            double PointWin = totalAllowedValue + value1 * 2;
-                            tvPoint.setText(PointWin+"");
+                            PointBetting = (value1+value2+value3);
+                            PointWin = value1 * 2;
                             message = "Car 1 là xe chiến thắng";
                         } else if (car2 >= 100) {
-                            totalAllowedValue = totalAllowedValue - (value1+value2+value3);
-                            double PointWin = totalAllowedValue + value2 * 2;
-                            tvPoint.setText(PointWin+"");
+                            PointBetting = (value1+value2+value3);
+                            PointWin = value2 * 2;
                             message = "Car 2 là xe chiến thắng";
                         } else if (car3 >= 100) {
-                            totalAllowedValue = totalAllowedValue - (value1+value2+value3);
-                            double PointWin = totalAllowedValue + value3 * 2;
-                            tvPoint.setText(PointWin+"");
+                            PointBetting = (value1+value2+value3);
+                            PointWin = value3 * 2;
                             message = "Car 3 là xe chiến thắng";
                         }
 
                         Toast.makeText(BettingPageActivity.this, message, Toast.LENGTH_SHORT).show();
 
-                        double leftAllowedValue = Double.parseDouble(tvPoint.getText().toString());
-
-                        if(totalAllowedValue >  leftAllowedValue){
-                            double point = totalAllowedValue - leftAllowedValue;
-                            Intent intent = new Intent(BettingPageActivity.this, LoseGame.class);
-                            intent.putExtra("point", "200");
-                            startActivity(intent);
-
-                        }else {
-                            double point =   leftAllowedValue - totalAllowedValue;
+                        double pointCurrent = Double.parseDouble(tvPoint.getText().toString());
+                        double point = (pointCurrent - PointBetting) + PointWin;
+                        double pointNoti;
+                        if(point >= pointCurrent ){
+                            pointNoti = point - totalAllowedValue;
+                            tvPoint.setText(""+point);
                             Intent intent = new Intent(BettingPageActivity.this, WinGame.class);
-                            intent.putExtra("point", "200");
+                            intent.putExtra("point", pointNoti+ "");
+                            startActivity(intent);
+                        } else {
+                            pointNoti = totalAllowedValue - point;
+                            tvPoint.setText(""+point);
+                            Intent intent = new Intent(BettingPageActivity.this, LoseGame.class);
+                            intent.putExtra("point", pointNoti+"");
                             startActivity(intent);
                         }
-
-
-
-
-
-
                         stop = true;
-
-
-
-
                     } else {
-                        handler.postDelayed(this, 200);
+                        handler.postDelayed(this, 1000);
                     }
                 }
             }

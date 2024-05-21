@@ -53,7 +53,7 @@ public class WinGame extends AppCompatActivity {
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("point");
-        bonus.setText( "+ " + data);
+        bonus.setText( "+ " +data);
         bonus.bringToFront();
 
 
