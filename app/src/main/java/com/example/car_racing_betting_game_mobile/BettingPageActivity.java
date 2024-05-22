@@ -131,7 +131,12 @@ public class BettingPageActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Tổng giá trị của các Car vượt quá giá trị cho phép.", Toast.LENGTH_LONG).show();
             return false;
-        } else {
+        } if(value1 == 0 && value2 == 0 && value3 == 0 ){
+            Toast.makeText(this,
+                    "Bạn chưa chọn xe nào để chạy!  .", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else {
             return true;
         }
     }
