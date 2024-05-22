@@ -30,7 +30,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
     String usernameSaved;
     private static final int MAX_COINS = 100;
     private static final int REQUEST_CODE_B = 1;
-    private static int timeLeft = 0; // x minutes in milliseconds
+    private  int timeLeft = 0; // x minutes in milliseconds
     private boolean canAddCoins = true;
     private CountDownTimer countDownTimer;
 
@@ -119,6 +119,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
              */
             saveData();
             Intent intent = new Intent(this, SignInActivity.class);
+            intent.putExtra("timeLeft", 0);
             startActivity(intent);
             finish();
         });

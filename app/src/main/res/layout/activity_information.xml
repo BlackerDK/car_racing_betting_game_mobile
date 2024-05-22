@@ -59,8 +59,9 @@
             android:layout_width="73dp"
             android:layout_height="66dp"
             android:layout_marginStart="164dp"
-            android:layout_marginTop="188dp"
+            android:layout_marginTop="164dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.153"
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/vipcard" />

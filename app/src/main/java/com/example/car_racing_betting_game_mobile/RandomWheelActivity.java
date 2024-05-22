@@ -1,12 +1,15 @@
 package com.example.car_racing_betting_game_mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,11 +22,16 @@ import java.util.Random;
 
 public class RandomWheelActivity extends AppCompatActivity {
     private ImageView wheel;
+    private TextView remainingSpinText;
     private Button spinButton;
+    private ImageButton nextButton;
     private static final  String[] sectors = { "100","15", "40", "20", "0", "70", "40", "jackpot"};
     private  static  final  int [] sectorsDegree = new int[sectors.length];
     private static final Random random = new Random();
     private int degree = 0;
+    private int remainingSpin = 3;
+    private String username = "";
+    private int balance = 0;
     private boolean isSpinning = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +44,35 @@ public class RandomWheelActivity extends AppCompatActivity {
             return insets;
         });
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        balance = intent.getIntExtra("balance", 0);
+        remainingSpin = intent.getIntExtra("remainingSpin", 3);
+        nextButton = findViewById(R.id.nextSectionButton);
         wheel = findViewById(R.id.imageWheel);
         spinButton = findViewById(R.id.btnSpin);
+        remainingSpinText = findViewById(R.id.txtRemainingSpinNumber);
         getSectorDegree();
         spinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isSpinning){
+                if(!isSpinning && remainingSpin > 0){
                     isSpinning = true;
                     spinWheel();
                 }
             }
 
+        });
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RandomWheelActivity.this, InformationUserActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("balance", balance);
+                intent.putExtra("timeLeft",0);
+                startActivity(intent);
+                finish();
+            }
         });
 
     }
@@ -72,8 +97,23 @@ public class RandomWheelActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Toast.makeText(RandomWheelActivity.this, "You won " + sectors[sectors.length - (degree + 1)], Toast.LENGTH_SHORT).show();
+                if(remainingSpin == 0){
+                    spinButton.setVisibility(View.GONE);
+                    return;
+                }
+                if(sectors[sectors.length - (degree + 1)].equals("jackpot")){
+                    Toast.makeText(RandomWheelActivity.this, "You won Jackpot", Toast.LENGTH_SHORT).show();
+                    remainingSpin = 10;
+                    remainingSpinText.setText("Remaining Spin: " + remainingSpin);
+                    isSpinning = false;
+                    return;
+                }
+                int money = Integer.parseInt(sectors[sectors.length - (degree + 1)]);
+                Toast.makeText(RandomWheelActivity.this, "You won " + money , Toast.LENGTH_SHORT).show();
+                --remainingSpin;
+                remainingSpinText.setText("Remaining Spin: " + remainingSpin);
                 isSpinning = false;
+                balance += money;
             }
 
             @Override
