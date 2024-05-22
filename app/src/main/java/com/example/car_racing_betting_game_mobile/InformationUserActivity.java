@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -27,6 +29,7 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
     private int totalCoins = 0;
     String usernameSaved;
     private static final int MAX_COINS = 100;
+    private static final int REQUEST_CODE_B = 1;
     private static int timeLeft = 0; // x minutes in milliseconds
     private boolean canAddCoins = true;
     private CountDownTimer countDownTimer;
@@ -57,7 +60,20 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         logoutBtn.setOnClickListener(this);
         startBtn.setOnClickListener(this);
         addCoinBtn.setOnClickListener(this);
+
     }
+
+    ActivityResultLauncher<Intent> laucherB = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == REQUEST_CODE_B) {
+            Intent data = result.getData();
+            if(data != null) {
+                this.totalCoins = data.getIntExtra("balance", 0);
+                this.tvBalance.setText("Your balance: " + this.totalCoins + "$");
+                this.canAddCoins = data.getBooleanExtra("canAddCoins", true);
+                this.timeLeft = data.getIntExtra("timeLeft", 0);
+            }
+        }
+    });
 
 
     @Override
@@ -88,8 +104,8 @@ public class InformationUserActivity extends AppCompatActivity implements View.O
         intent.putExtra("balance", totalCoins);
         intent.putExtra("timeLeft", timeLeft);
         intent.putExtra("canAddCoins", canAddCoins);
-        startActivity(intent);
-        finish();
+        //  start with activity B
+        laucherB.launch(intent);
     }
 
     public void handleLogout() {
