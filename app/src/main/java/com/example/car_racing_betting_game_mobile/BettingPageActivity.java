@@ -1,38 +1,69 @@
 package com.example.car_racing_betting_game_mobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.Random;
 
 public class BettingPageActivity extends AppCompatActivity {
 
     private Random random = new Random();
+    private String username;
+    private boolean canAddCoins;
+    private int timeLeft = 0;
+    private int totalCoins = 0;
     private SeekBar seekBar1, seekBar2, seekBar3;
-    private CheckBox cbCar1,cbCar2, cbCar3;
-    private EditText edCar1, edCar2,edCar3;
+    private final int RESPONSE_CODE_B = 1;
+    private CheckBox cbCar1, cbCar2, cbCar3;
+    private EditText edCar1, edCar2, edCar3;
     private TextView tvPoint;
-    Button btnStart, btnReset;
+    Button btnStart, btnReset, btnRule;
+    ImageButton btnAddMoney;
+    ImageButton btnBack;
     private boolean stop = false;
     private double PointWin;
     private double PointLost;
     private double PointBetting;
+    private CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_betting);
+
+        // get data from information user activity
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        totalCoins = intent.getIntExtra("balance", 0);
+        canAddCoins = intent.getBooleanExtra("canAddCoins", true);
+        timeLeft = intent.getIntExtra("timeLeft", 0);
+
+        if (username != null && totalCoins != 0) {
+            tvPoint = findViewById(R.id.tvPoint);
+            tvPoint.setText("" + totalCoins);
+        }
+        // get view
+        btnAddMoney = findViewById(R.id.btnAddMoney);
         btnStart = findViewById(R.id.btnStart);
+        btnBack = findViewById(R.id.backBtn);
         btnReset = findViewById(R.id.btnReset);
+        btnRule = findViewById(R.id.btnRule);
         seekBar1 = findViewById(R.id.sbCar1);
         seekBar2 = findViewById(R.id.sbCar2);
         seekBar3 = findViewById(R.id.sbCar3);
@@ -47,29 +78,63 @@ public class BettingPageActivity extends AppCompatActivity {
         btnReset.setOnClickListener(view -> {
             ableInputs();
             SetPointsBetting();
-            stop=true;
+            seekBar1.setProgress(0);
+            seekBar2.setProgress(0);
+            seekBar3.setProgress(0);
+            stop = true;
         });
         btnStart.setOnClickListener(view -> {
-            if (!tvPoint.getText().toString().isEmpty()){
+            if (!tvPoint.getText().toString().isEmpty()) {
                 double Points = Double.parseDouble(tvPoint.getText().toString());
-                if (Points == 0){
+                if (Points == 0) {
                     Toast.makeText(BettingPageActivity.this,
                             "Do not money to play game! Add money more! ", Toast.LENGTH_SHORT).show();
-                }else{
-                    if (validateInputs()){
+                } else {
+                    if (validateInputs()) {
                         seekBar1.setProgress(0);
                         seekBar2.setProgress(0);
                         seekBar3.setProgress(0);
-                        stop=false;
+                        stop = false;
                         disableInputs();
                         runRandomFunctions();
-                    }else{
+                    } else {
                         SetPointsBetting();
                     }
                 }
             }
         });
+        /**
+         * Add money and redirect to user information page
+         */
+        btnAddMoney.setOnClickListener(view -> {
+            showAddCoinsDialog();
+        });
+        btnBack.setOnClickListener(view -> {
+            Intent intent1 = configureStore(this, InformationUserActivity.class);
+            setResult(RESPONSE_CODE_B, intent1);
+            finish();
+        });
+        btnRule.setOnClickListener(view -> {
+            Intent intent1 = configureStore(this, RulesPageActivity.class);
+            launcherC.launch(intent1);
+        });
     }
+
+    ActivityResultLauncher<Intent> launcherC = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                // get request from C
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        username = data.getStringExtra("username");
+                        totalCoins = data.getIntExtra("balance", 0);
+                        canAddCoins = data.getBooleanExtra("canAddCoins", true);
+                        timeLeft = data.getIntExtra("timeLeft", 0);
+                    }
+                }
+            });
+
     private boolean validateInputs() {
         double totalAllowedValue = Double.parseDouble(tvPoint.getText().toString());
         int value1 = cbCar1.isChecked() ?
@@ -94,16 +159,17 @@ public class BettingPageActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Tổng giá trị của các Car vượt quá giá trị cho phép.", Toast.LENGTH_LONG).show();
             return false;
-        } if(value1 == 0 && value2 == 0 && value3 == 0 ){
+        }
+        if (value1 == 0 && value2 == 0 && value3 == 0) {
             Toast.makeText(this,
                     "Bạn chưa chọn xe nào để chạy!  .", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
-    private void SetPointsBetting(){
+
+    private void SetPointsBetting() {
         edCar1.setText("");
         edCar2.setText("");
         edCar3.setText("");
@@ -111,6 +177,7 @@ public class BettingPageActivity extends AppCompatActivity {
         cbCar2.setChecked(false);
         cbCar3.setChecked(false);
     }
+
     private void disableInputs() {
         cbCar1.setEnabled(false);
         cbCar2.setEnabled(false);
@@ -119,6 +186,7 @@ public class BettingPageActivity extends AppCompatActivity {
         edCar2.setEnabled(false);
         edCar3.setEnabled(false);
     }
+
     private void ableInputs() {
         cbCar1.setEnabled(true);
         cbCar2.setEnabled(true);
@@ -127,6 +195,7 @@ public class BettingPageActivity extends AppCompatActivity {
         edCar2.setEnabled(true);
         edCar3.setEnabled(true);
     }
+
     private void runRandomFunctions() {
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -142,7 +211,7 @@ public class BettingPageActivity extends AppCompatActivity {
                 int value3 = cbCar3.isChecked() ?
                         (edCar3.getText().toString().isEmpty() ? 0 :
                                 Integer.parseInt(edCar3.getText().toString())) : 0;
-                if(!stop) {
+                if (!stop) {
                     int car1 = seekBar1.getProgress();
                     int car2 = seekBar2.getProgress();
                     int car3 = seekBar3.getProgress();
@@ -159,15 +228,15 @@ public class BettingPageActivity extends AppCompatActivity {
                     if (car1 >= 100 || car2 >= 100 || car3 >= 100) {
                         String message = "Car là xe chiến thắng ";
                         if (car1 >= 100) {
-                            PointBetting = (value1+value2+value3);
+                            PointBetting = (value1 + value2 + value3);
                             PointWin = value1 * 2;
                             message = "Car 1 là xe chiến thắng";
                         } else if (car2 >= 100) {
-                            PointBetting = (value1+value2+value3);
+                            PointBetting = (value1 + value2 + value3);
                             PointWin = value2 * 2;
                             message = "Car 2 là xe chiến thắng";
                         } else if (car3 >= 100) {
-                            PointBetting = (value1+value2+value3);
+                            PointBetting = (value1 + value2 + value3);
                             PointWin = value3 * 2;
                             message = "Car 3 là xe chiến thắng";
                         }
@@ -177,17 +246,19 @@ public class BettingPageActivity extends AppCompatActivity {
                         double pointCurrent = Double.parseDouble(tvPoint.getText().toString());
                         double point = (pointCurrent - PointBetting) + PointWin;
                         double pointNoti;
-                        if(point >= pointCurrent ){
+                        if (point >= pointCurrent) {
                             pointNoti = point - totalAllowedValue;
-                            tvPoint.setText(""+point);
+                            tvPoint.setText("" + point);
+                            totalCoins = (int) point;
                             Intent intent = new Intent(BettingPageActivity.this, WinGame.class);
-                            intent.putExtra("point", pointNoti+ "");
+                            intent.putExtra("point", pointNoti + "");
                             startActivity(intent);
                         } else {
                             pointNoti = totalAllowedValue - point;
-                            tvPoint.setText(""+point);
+                            tvPoint.setText("" + point);
+                            totalCoins = (int) point;
                             Intent intent = new Intent(BettingPageActivity.this, LoseGame.class);
-                            intent.putExtra("point", pointNoti+"");
+                            intent.putExtra("point", pointNoti + "");
                             startActivity(intent);
                         }
                         stop = true;
@@ -198,5 +269,53 @@ public class BettingPageActivity extends AppCompatActivity {
             }
         };
         handler.post(runnable);
+    }
+
+    public void showAddCoinsDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // init dialog fragment with time left, which set to 0 at first
+        TimeDialogFragment addCoinsDialogFragment = TimeDialogFragment.newInstance(timeLeft);
+        addCoinsDialogFragment.setOnAddCoinsListener(new TimeDialogFragment.OnAddCoinsListener() {
+            @Override
+            public void onAddCoins(int coins) {
+                if (canAddCoins) { // check whether user can add coins or not
+                    totalCoins += coins;
+                    tvPoint.setText("" + totalCoins);
+                    canAddCoins = false; // if user clicked on button get coins -> set canAddCoins to false
+                    timeLeft = 1 * 60 * 1000; // 1 minute in milliseconds
+                    startCountDownTimer(timeLeft); // set count down from main activity
+                } else {
+                    Toast.makeText(BettingPageActivity.this, "Please enter a value between 1 and 100", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        addCoinsDialogFragment.show(fragmentManager, "add_coins_dialog");
+    }
+
+    public Intent configureStore(Context packageContext, Class<?> cls) {
+        Intent intent = new Intent(packageContext, cls);
+        intent.putExtra("username", username);
+        intent.putExtra("balance", totalCoins);
+        intent.putExtra("canAddCoins", canAddCoins);
+        intent.putExtra("timeLeft", timeLeft);
+        return intent;
+    }
+
+    private void startCountDownTimer(long duration) {
+        countDownTimer = new CountDownTimer(duration, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = (int) millisUntilFinished; // set time left to millisUntilFinished -> on tracking realtime
+            }
+
+            @Override
+            public void onFinish() {
+                // after time left is finished, set canAddCoins to true
+                canAddCoins = true;
+                timeLeft = 0;
+                Toast.makeText(BettingPageActivity.this, "You can add coins again", Toast.LENGTH_SHORT).show();
+            }
+        };
+        countDownTimer.start();
     }
 }

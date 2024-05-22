@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteX="-24dp"
-    tools:layout_editor_absoluteY="-35dp">
+    tools:layout_editor_absoluteY="-35dp"
+    android:background="@drawable/b1"
+    >
 
     <TextView
         android:id="@+id/tvLogo"
@@ -17,22 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026" />
-
-    <TextView
-        android:id="@+id/tvPoint"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:background="#9C0288D1"
-        android:drawableLeft="@drawable/dollar_money"
-        android:gravity="center"
-        android:text="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.663"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.086" />
 
     <EditText
         android:id="@+id/edCar2"
@@ -75,19 +62,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.471" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnAddMoney"
-        android:layout_width="52dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
-        android:backgroundTint="#EEFFFFFF"
-        android:drawableTop="@drawable/add_money"
+        android:background="@drawable/money"
         android:gravity="center"
         android:padding="5dp"
-        android:text="0"
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.902"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <TextView
+        android:id="@+id/tvPoint"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="#87BAEC"
+        android:drawableLeft="@drawable/dollar_money"
+        android:gravity="center"
+        android:text="100"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.663"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <Button
+        android:id="@+id/btnRule"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#EEFFFFFF"
+        android:drawableTop="@drawable/question_mark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.309" />
@@ -200,4 +214,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.465" />
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="53dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/before"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
