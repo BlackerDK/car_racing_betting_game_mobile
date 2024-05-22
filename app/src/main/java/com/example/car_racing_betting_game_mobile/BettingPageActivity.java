@@ -28,7 +28,8 @@ public class BettingPageActivity extends AppCompatActivity {
     private CheckBox cbCar1,cbCar2, cbCar3;
     private EditText edCar1, edCar2,edCar3;
     private TextView tvPoint;
-    Button btnStart, btnReset, btnAddMoney;
+    Button btnStart, btnReset;
+    ImageButton btnAddMoney;
     ImageButton btnBack;
     private boolean stop = false;
     private double PointWin;
@@ -69,6 +70,9 @@ public class BettingPageActivity extends AppCompatActivity {
         btnReset.setOnClickListener(view -> {
             ableInputs();
             SetPointsBetting();
+            seekBar1.setProgress(0);
+            seekBar2.setProgress(0);
+            seekBar3.setProgress(0);
             stop=true;
         });
         btnStart.setOnClickListener(view -> {
